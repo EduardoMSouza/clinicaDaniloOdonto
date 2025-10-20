@@ -1,21 +1,13 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-export default function LoginPage() {
+export default function Home() {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
-
-    // Verifica se já está logado
-    useEffect(() => {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))
-        if (token) {
-            router.push('/dashboard')
-        }
-    }, [router])
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -39,7 +31,7 @@ export default function LoginPage() {
                         </svg>
                     </div>
                     <h1 className="text-3xl font-bold text-gray-900">OdontoClínica</h1>
-                    <p className="text-gray-600 mt-2">Sistema de Gestão</p>
+                    <p className="text-gray-600 mt-2">Faça login em sua conta</p>
                 </div>
 
                 <form onSubmit={handleLogin} className="space-y-6">
@@ -78,13 +70,13 @@ export default function LoginPage() {
                         disabled={loading}
                         className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {loading ? "Entrando..." : "Entrar no Sistema"}
+                        {loading ? "Entrando..." : "Entrar"}
                     </button>
                 </form>
 
                 <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
-                        Sistema demonstrativo - Use qualquer credencial
+                        Demo: Use qualquer e-mail e senha
                     </p>
                 </div>
             </div>

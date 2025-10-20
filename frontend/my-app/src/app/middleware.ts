@@ -1,15 +1,23 @@
-// middleware.ts
-import { NextResponse } from "next/server"
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export function middleware(req) {
-    const isLogged = req.cookies.get("token") // ou sessionStorage
-    const isLoginPage = req.nextUrl.pathname.startsWith("/login")
+export function middleware(request: NextRequest) {
+    const token = request.cookies.get('token')?.value
+    const isLoginPage = request.nextUrl.pathname === '/login'
 
-    if (!isLogged && !isLoginPage) {
-        return NextResponse.redirect(new URL("/login", req.url))
+    // Se não tem token e não está na página de login, redireciona para login
+    if (!token && !isLoginPage) {
+        return NextResponse.redirect(new URL('/login', request.url))
     }
 
-    if (isLogged && isLoginPage) {
-        return NextResponse.redirect(new URL("/dashboard/secretaria", req.url))
+    // Se tem token e está na página de login, redireciona para dashboard
+    if (token && isLoginPage) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
     }
+
+    return NextResponse.next()
+}
+
+export const config = {
+    matcher: ['/dashboard/:path*', '/login']
 }
