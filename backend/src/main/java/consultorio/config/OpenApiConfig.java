@@ -1,4 +1,4 @@
-package consultorio.consultorio.config;
+package consultorio.config;
 
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;

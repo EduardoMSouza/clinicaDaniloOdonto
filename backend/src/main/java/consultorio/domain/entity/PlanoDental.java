@@ -6,22 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
-@Table(name = "evolucao_tratamento")
+@Table(name = "plano_dental")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EvolucaoTratamento {
+public class PlanoDental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    private LocalDate dataProcedimento;
-    private String evolucaoIntercorrenciasTratamento;
+    private String dente;
+    private String procedimento;
+    private Double valor;
 
     // RELACIONAMENTO COM PACIENTE
     @ManyToOne(fetch = FetchType.LAZY)
