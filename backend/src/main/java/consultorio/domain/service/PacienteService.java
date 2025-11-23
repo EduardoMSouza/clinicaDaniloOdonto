@@ -32,6 +32,12 @@ public class PacienteService {
             throw new RuntimeException("Já existe um paciente cadastrado com este RG: " + request.getRg());
         }
 
+        // Verifica se número de prontuário já existe (se informado)
+        if (request.getProntuarioNumero() != null && !request.getProntuarioNumero().isBlank() &&
+                pacienteRepository.existsByProntuarioNumero(request.getProntuarioNumero())) {
+            throw new RuntimeException("Já existe um paciente cadastrado com este número de prontuário: " + request.getProntuarioNumero());
+        }
+
         Paciente paciente = pacienteMapper.toEntity(request);
         Paciente savedPaciente = pacienteRepository.save(paciente);
         return pacienteMapper.toEntityResponse(savedPaciente);
@@ -46,6 +52,13 @@ public class PacienteService {
     @Transactional(readOnly = true)
     public List<PacienteResumoProjection> findAllResumo() {
         return pacienteRepository.findAllResumo();
+    }
+
+    @Transactional(readOnly = true)
+    public PacienteResponse findByProntuario(String prontuarioNumero) {
+        Paciente paciente = pacienteRepository.findByProntuarioNumero(prontuarioNumero)
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado com prontuário: " + prontuarioNumero));
+        return pacienteMapper.toEntityResponse(paciente);
     }
 
     @Transactional(readOnly = true)
@@ -79,6 +92,14 @@ public class PacienteService {
                 !request.getRg().equals(existingPaciente.getRg())) {
             if (pacienteRepository.existsByRgAndIdNot(request.getRg(), id)) {
                 throw new RuntimeException("Já existe outro paciente cadastrado com este RG: " + request.getRg());
+            }
+        }
+
+        // Verifica se o número de prontuário já existe em outro paciente (se informado)
+        if (request.getProntuarioNumero() != null && !request.getProntuarioNumero().isBlank() &&
+                !request.getProntuarioNumero().equals(existingPaciente.getProntuarioNumero())) {
+            if (pacienteRepository.existsByProntuarioNumeroAndIdNot(request.getProntuarioNumero(), id)) {
+                throw new RuntimeException("Já existe outro paciente cadastrado com este número de prontuário: " + request.getProntuarioNumero());
             }
         }
 
@@ -136,5 +157,4 @@ public class PacienteService {
     public boolean existsByRg(String rg) {
         return pacienteRepository.existsByRg(rg);
     }
-
 }

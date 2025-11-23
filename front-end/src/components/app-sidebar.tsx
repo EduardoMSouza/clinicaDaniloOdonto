@@ -36,17 +36,17 @@ const menuItems = [
     {
         title: "Pacientes",
         icon: Users,
-        url: "/pacientes",
+        url: "/dashboard/pacientes",
     },
     {
         title: "Dentistas",
         icon: UserCircle,
-        url: "/dentistas",
+        url: "/dashboard/dentistas",
     },
     {
         title: "Agenda",
         icon: Calendar,
-        url: "/agenda",
+        url: "/dashboard/agenda",
     },
 ]
 
@@ -90,7 +90,7 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <a href="/configuracoes">
+                                    <a href="/dashboard/configuracoes">
                                         <Settings className="h-4 w-4" />
                                         <span>Configurações</span>
                                     </a>

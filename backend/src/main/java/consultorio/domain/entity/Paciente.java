@@ -2,8 +2,6 @@ package consultorio.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +29,7 @@ public class Paciente {
 
 
     //Dados basicos
-    @Column(name = "prontuario_numero", unique = true)
+    @Column(name = "prontuario_numero", unique = true, nullable = false)
     private String prontuarioNumero;
 
     @Column(name = "nome_paciente")
@@ -47,12 +45,10 @@ public class Paciente {
     @Column(name = "orgao_expedidor")
     private String orgaoExpedidor;
 
-    @Column(name = "cpf", nullable = false)
-    @NotBlank(message = "CPF é obrigatório") @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
+    @Column(name = "cpf")
     private String cpf;
 
     @Column(name = "data_nascimento")
-    @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDate dataNascimento;
 
     @Column(name = "naturalidade_paciente")

@@ -50,6 +50,12 @@ public class PacienteController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/prontuario/{prontuario}")
+    public ResponseEntity<PacienteResponse> findByProntuario(@PathVariable String prontuario) {
+        PacienteResponse response = pacienteService.findByProntuario(prontuario);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity<PacienteResponse> findByCpf(@PathVariable String cpf) {
         PacienteResponse response = pacienteService.findByCpf(cpf);

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="41b40220-be18-4986-82c7-d58ec893ca5b" name="Changes" comment="login feito">
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/ConsultorioApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/controller/AgendamentoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/controller/DentistaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/mapper/AgendamentoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/mapper/DentistaMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/request/AgendamentoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/request/DentistaRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/response/AgendamentoResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/response/DentistaResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/config/ModelMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/entity/Agendamento.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/entity/Dentista.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/entity/enums/StatusAgendamento.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/exception/BusinessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/repository/AgendamentoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/repository/DentistaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/service/AgendamentoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/service/DentistaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/test/java/consultorio/consultorio/ConsultorioApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/_components/DentistaCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/_components/DentistaFormCreate.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/_components/DentistaHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/_components/DentistaList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/_components/DentistaSearch.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/dentista_completo/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/editar_dentista/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/novo_dentista/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/_components/PacienteCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/_components/PacienteCompleto.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/_components/PacienteFormCreate.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/_components/PacienteFormEdit.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/_components/PacienteList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/editar_paciente/[prontuarioNumero]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/novo_paciente/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/paciente_completo/[prontuarioNumero]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/agendaService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/dentistasService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/pacientesService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/dentistaType.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/pacientesTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/controller/PacienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/controller/PacienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/response/PacienteResumoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/api/dto/response/PacienteResumoResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/entity/Paciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/entity/Paciente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/repository/PacienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/repository/PacienteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/service/PacienteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/consultorio/domain/service/PacienteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/agenda/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/agenda/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/configuracoes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/configuracoes/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/dentistas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/dentistas/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/pacientes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/pacientes/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app-sidebar.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="35odtohG9o7AAeXzvcv6sHU5vxK" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projetos/ConsultorioOdontologico/clinicaOdontologicaDanilo/front-end/src/app/dashboard/pacientes/paciente_completo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\projetos\\ConsultorioOdontologico\\clinicaOdontologicaDanilo\\front-end\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projetos\ConsultorioOdontologico\clinicaOdontologicaDanilo\front-end\src\app\dashboard\pacientes\paciente_completo" />
+      <recent name="C:\projetos\ConsultorioOdontologico\clinicaOdontologicaDanilo\front-end\src\app\dashboard\pacientes" />
+      <recent name="C:\projetos\ConsultorioOdontologico\clinicaOdontologicaDanilo\front-end\src\app\dashboard\dentistas" />
+      <recent name="C:\projetos\ConsultorioOdontologico\clinicaOdontologicaDanilo\front-end\src\app\dashboard\configuracoes" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projetos\ConsultorioOdontologico\clinicaOdontologicaDanilo\front-end\src\app\dashboard\pacientes\editar_paciente\[prontuarioNumero]" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.Next.js: server-side">
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.26830.93" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41b40220-be18-4986-82c7-d58ec893ca5b" name="Changes" comment="" />
+      <created>1763780577383</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763780577383</updated>
+      <workItem from="1763780579226" duration="14769000" />
+      <workItem from="1763915505096" duration="512000" />
+      <workItem from="1763931250072" duration="2891000" />
+    </task>
+    <task id="LOCAL-00001" summary="login feito">
+      <option name="closed" value="true" />
+      <created>1763783586594</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763783586594</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="login feito" />
+    <option name="LAST_COMMIT_MESSAGE" value="login feito" />
+  </component>
+</project>
