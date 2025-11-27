@@ -1,106 +1,127 @@
 package consultorio.api.controller;
 
 import consultorio.api.dto.request.DentistaRequest;
+import consultorio.api.dto.request.HorarioTrabalhoRequest;
 import consultorio.api.dto.response.DentistaResponse;
 import consultorio.domain.service.DentistaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/dentistas")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class DentistaController {
 
     private final DentistaService dentistaService;
 
+    // ====================== CRUD BÁSICO ======================
     @PostMapping
-    public ResponseEntity<DentistaResponse> create(@Valid @RequestBody DentistaRequest request) {
-        DentistaResponse response = dentistaService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<DentistaResponse> criar(@Valid @RequestBody DentistaRequest request) {
+        return ResponseEntity.status(201).body(dentistaService.create(request));
     }
 
     @GetMapping
-    public ResponseEntity<List<DentistaResponse>> findAll() {
-        List<DentistaResponse> responses = dentistaService.findAll();
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<List<DentistaResponse>> listarTodos() {
+        return ResponseEntity.ok(dentistaService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DentistaResponse> findById(@PathVariable Long id) {
-        DentistaResponse response = dentistaService.findById(id);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/cro/{cro}")
-    public ResponseEntity<DentistaResponse> findByCro(@PathVariable String cro) {
-        DentistaResponse response = dentistaService.findByCro(cro);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/email/{email}")
-    public ResponseEntity<DentistaResponse> findByEmail(@PathVariable String email) {
-        DentistaResponse response = dentistaService.findByEmail(email);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<DentistaResponse> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(dentistaService.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DentistaResponse> update(
+    public ResponseEntity<DentistaResponse> atualizar(
             @PathVariable Long id,
             @Valid @RequestBody DentistaRequest request) {
-        DentistaResponse response = dentistaService.update(id, request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(dentistaService.update(id, request));
+    }
+
+    @PatchMapping("/{id}/ativar")
+    public ResponseEntity<DentistaResponse> ativar(@PathVariable Long id) {
+        return ResponseEntity.ok(dentistaService.activate(id));
+    }
+
+    @PatchMapping("/{id}/inativar")
+    public ResponseEntity<DentistaResponse> inativar(@PathVariable Long id) {
+        return ResponseEntity.ok(dentistaService.inactivate(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         dentistaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/activate")
-    public ResponseEntity<DentistaResponse> activate(@PathVariable Long id) {
-        DentistaResponse response = dentistaService.activate(id);
-        return ResponseEntity.ok(response);
+    // ====================== BUSCAS AVANÇADAS ======================
+    @GetMapping("/ativos")
+    public ResponseEntity<List<DentistaResponse>> ativos() {
+        return ResponseEntity.ok(dentistaService.findByStatus(true));
     }
 
-    @PatchMapping("/{id}/inactivate")
-    public ResponseEntity<DentistaResponse> inactivate(@PathVariable Long id) {
-        DentistaResponse response = dentistaService.inactivate(id);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/status/{ativo}")
-    public ResponseEntity<List<DentistaResponse>> findByStatus(@PathVariable Boolean ativo) {
-        List<DentistaResponse> responses = dentistaService.findByStatus(ativo);
-        return ResponseEntity.ok(responses);
+    @GetMapping("/inativos")
+    public ResponseEntity<List<DentistaResponse>> inativos() {
+        return ResponseEntity.ok(dentistaService.findByStatus(false));
     }
 
     @GetMapping("/especialidade/{especialidade}")
-    public ResponseEntity<List<DentistaResponse>> findByEspecialidade(@PathVariable String especialidade) {
-        List<DentistaResponse> responses = dentistaService.findByEspecialidade(especialidade);
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<List<DentistaResponse>> porEspecialidade(@PathVariable String especialidade) {
+        return ResponseEntity.ok(dentistaService.findByEspecialidade(especialidade));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<DentistaResponse>> findByNomeContaining(@RequestParam String nome) {
-        List<DentistaResponse> responses = dentistaService.findByNomeContaining(nome);
-        return ResponseEntity.ok(responses);
+    @GetMapping("/buscar")
+    public ResponseEntity<List<DentistaResponse>> buscarPorNome(@RequestParam String nome) {
+        return ResponseEntity.ok(dentistaService.findByNomeContaining(nome));
     }
 
-    @GetMapping("/exists/cro/{cro}")
-    public ResponseEntity<Boolean> existsByCro(@PathVariable String cro) {
-        boolean exists = dentistaService.existsByCro(cro);
-        return ResponseEntity.ok(exists);
+    // ====================== HORÁRIOS DO DENTISTA ======================
+    @PostMapping("/{id}/horarios/padrao")
+    public ResponseEntity<Void> configurarHorariosPadrao(@PathVariable Long id) {
+        dentistaService.configurarHorarioPadrao(id);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/exists/email/{email}")
-    public ResponseEntity<Boolean> existsByEmail(@PathVariable String email) {
-        boolean exists = dentistaService.existsByEmail(email);
-        return ResponseEntity.ok(exists);
+    @PutMapping("/{id}/horarios/{dia}")
+    public ResponseEntity<Void> atualizarHorarioDoDia(
+            @PathVariable Long id,
+            @PathVariable DayOfWeek dia,
+            @Valid @RequestBody HorarioTrabalhoRequest request) {
+
+        dentistaService.atualizarHorarioDia(
+                id,
+                dia,
+                request.getHoraInicioManha(),
+                request.getHoraFimManha(),
+                request.getHoraInicioTarde(),
+                request.getHoraFimTarde()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/horarios-disponiveis")
+    public ResponseEntity<List<LocalDateTime>> horariosDisponiveis(
+            @PathVariable Long id,
+            @RequestParam("data") LocalDate data) {
+
+        return ResponseEntity.ok(dentistaService.consultarHorariosDisponiveis(id, data));
+    }
+
+    // ====================== VALIDAÇÃO RÁPIDA ======================
+    @GetMapping("/existe/cro/{cro}")
+    public ResponseEntity<Boolean> existeCro(@PathVariable String cro) {
+        return ResponseEntity.ok(dentistaService.existsByCro(cro));
+    }
+
+    @GetMapping("/existe/email/{email}")
+    public ResponseEntity<Boolean> existeEmail(@PathVariable String email) {
+        return ResponseEntity.ok(dentistaService.existsByEmail(email));
     }
 }

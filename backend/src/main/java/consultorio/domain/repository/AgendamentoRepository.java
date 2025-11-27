@@ -14,48 +14,171 @@ import java.util.List;
 @Repository
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
 
-    // Buscar agendamentos por dentista e data
-    List<Agendamento> findByDentistaIdAndDataHoraBetween(Long dentistaId, LocalDateTime start, LocalDateTime end);
+    // ===========================================================
+    // 🔍 BUSCAS SIMPLES (Spring Data Method Query)
+    // ===========================================================
 
-    // Buscar agendamentos por paciente
     List<Agendamento> findByPacienteId(Long pacienteId);
 
-    // Buscar agendamentos por status
+    List<Agendamento> findByDentistaId(Long dentistaId);
+
+    List<Agendamento> findByDentistaIdAndPacienteId(Long dentistaId, Long pacienteId);
+
     List<Agendamento> findByStatus(StatusAgendamento status);
 
-    // Buscar agendamentos por período
+    List<Agendamento> findByStatusIn(List<StatusAgendamento> statuses);
+
     List<Agendamento> findByDataHoraBetween(LocalDateTime start, LocalDateTime end);
 
-    // Verificar conflito de horário - CORRIGIDO
+    List<Agendamento> findByDataHoraAfter(LocalDateTime dataHora);
+
+    List<Agendamento> findByDataHoraBefore(LocalDateTime dataHora);
+
+    List<Agendamento> findByDentistaIdAndDataHoraBetween(Long dentistaId, LocalDateTime start, LocalDateTime end);
+
+    List<Agendamento> findByDentistaIdAndDataHoraAfter(Long dentistaId, LocalDateTime dataHora);
+
+
+    // ===========================================================
+    // 🔍 BUSCAR AGENDAMENTOS EM UMA DATA (SEM DATE())
+    // ===========================================================
+
     @Query("""
-        SELECT COUNT(a) > 0 FROM Agendamento a 
-        WHERE a.dentista.id = :dentistaId 
-        AND a.status NOT IN :statusExcluidos
-        AND (
-            (a.dataHora < :dataHoraFim AND a.dataHoraFim > :dataHora)
-            OR (a.dataHora = :dataHora)
-        )
-        AND (:agendamentoId IS NULL OR a.id != :agendamentoId)
+        SELECT a FROM Agendamento a
+        WHERE a.dataHora >= :inicio AND a.dataHora < :fim
+    """)
+    List<Agendamento> findByData(
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
+
+    @Query("""
+        SELECT a FROM Agendamento a
+        WHERE a.dentista.id = :dentistaId
+        AND a.dataHora >= :inicio AND a.dataHora < :fim
+    """)
+    List<Agendamento> findByDentistaIdAndData(
+            @Param("dentistaId") Long dentistaId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
+
+
+    // ===========================================================
+    // 🔍 CONFLITOS DE HORÁRIO
+    // ===========================================================
+    @Query("""
+        SELECT COUNT(a) > 0 FROM Agendamento a
+        WHERE a.dentista.id = :dentistaId
+        AND a.status IN :statuses
+        AND (a.dataHora < :fim AND a.dataHoraFim > :inicio)
+        AND (:agendamentoId IS NULL OR a.id <> :agendamentoId)
     """)
     boolean existsConflitoHorario(
             @Param("dentistaId") Long dentistaId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim,
+            @Param("statuses") List<StatusAgendamento> statuses,
+            @Param("agendamentoId") Long agendamentoId
+    );
+
+
+    // ===========================================================
+    // 🔍 HORÁRIO EXATO DISPONÍVEL
+    // ===========================================================
+    @Query("""
+        SELECT COUNT(a) = 0 FROM Agendamento a
+        WHERE a.dentista.id = :dentistaId
+        AND a.dataHora = :dataHora
+        AND a.status IN :statuses
+    """)
+    boolean isHorarioDisponivel(
+            @Param("dentistaId") Long dentistaId,
             @Param("dataHora") LocalDateTime dataHora,
-            @Param("dataHoraFim") LocalDateTime dataHoraFim,
-            @Param("statusExcluidos") List<StatusAgendamento> statusExcluidos,
-            @Param("agendamentoId") Long agendamentoId);
+            @Param("statuses") List<StatusAgendamento> statuses
+    );
 
-    // Agendamentos do dia - CORRIGIDO
-    @Query("SELECT a FROM Agendamento a WHERE CAST(a.dataHora AS localdate) = :data AND a.status IN :statuses")
-    List<Agendamento> findAgendamentosPorData(
-            @Param("data") LocalDate data,
-            @Param("statuses") List<StatusAgendamento> statuses);
 
-    // Próximos agendamentos
-    List<Agendamento> findByDataHoraAfterAndStatusInOrderByDataHoraAsc(
-            LocalDateTime dataHora, List<StatusAgendamento> statuses);
+    // ===========================================================
+    // 🔍 PRÓXIMOS AGENDAMENTOS
+    // ===========================================================
+    @Query("""
+        SELECT a FROM Agendamento a
+        WHERE a.dataHora >= :hoje
+        AND a.status IN :statuses
+        ORDER BY a.dataHora ASC
+    """)
+    List<Agendamento> findProximosAgendamentos(
+            @Param("hoje") LocalDateTime hoje,
+            @Param("statuses") List<StatusAgendamento> statuses
+    );
 
-    // Agendamentos do dia de hoje - método auxiliar
-    default List<Agendamento> findAgendamentosHoje(List<StatusAgendamento> statuses) {
-        return findAgendamentosPorData(LocalDate.now(), statuses);
-    }
+
+    // ===========================================================
+    // 🔍 AGENDAMENTOS DO DIA (SEM CURRENT_DATE + 1)
+    // ===========================================================
+    @Query("""
+        SELECT a FROM Agendamento a
+        WHERE a.dentista.id = :dentistaId
+        AND a.dataHora >= :inicio AND a.dataHora < :fim
+        AND a.status IN :statuses
+        ORDER BY a.dataHora ASC
+    """)
+    List<Agendamento> findAgendamentosHoje(
+            @Param("dentistaId") Long dentistaId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim,
+            @Param("statuses") List<StatusAgendamento> statuses
+    );
+
+
+    // ===========================================================
+    // 🔍 AGENDAMENTOS POR MÊS (SEM YEAR(), MONTH())
+    // ===========================================================
+    @Query("""
+        SELECT a FROM Agendamento a
+        WHERE a.dentista.id = :dentistaId
+        AND a.dataHora >= :inicio AND a.dataHora < :fim
+        ORDER BY a.dataHora ASC
+    """)
+    List<Agendamento> findByDentistaIdAndMes(
+            @Param("dentistaId") Long dentistaId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
+
+
+    // ===========================================================
+    // 🔍 PACIENTE COM AGENDAMENTOS FUTUROS
+    // ===========================================================
+    @Query("""
+        SELECT COUNT(a) > 0 FROM Agendamento a
+        WHERE a.paciente.id = :pacienteId
+        AND a.dataHora > :agora
+        AND a.status IN :statuses
+    """)
+    boolean existsAgendamentoFuturo(
+            @Param("pacienteId") Long pacienteId,
+            @Param("agora") LocalDateTime agora,
+            @Param("statuses") List<StatusAgendamento> statuses
+    );
+
+
+    // ===========================================================
+    // 🔍 CONTAGENS OTIMIZADAS
+    // ===========================================================
+    @Query("SELECT COUNT(a) FROM Agendamento a WHERE a.status = :status")
+    Long countByStatus(@Param("status") StatusAgendamento status);
+
+    @Query("SELECT COUNT(a) FROM Agendamento a WHERE a.dentista.id = :dentistaId AND a.status = :status")
+    Long countByDentistaIdAndStatus(
+            @Param("dentistaId") Long dentistaId,
+            @Param("status") StatusAgendamento status
+    );
+
+    @Query("SELECT COUNT(a) FROM Agendamento a WHERE a.dataHora BETWEEN :inicio AND :fim")
+    Long countByPeriodo(
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
 }

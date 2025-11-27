@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 public class AgendamentoRequest {
     private Long pacienteId;
     private Long dentistaId;
+    private Integer duracaoMinutos;
     private LocalDateTime dataHora;
-    private LocalDateTime dataHoraFim;
     private String procedimento;
     private String observacoes;
+
 }
